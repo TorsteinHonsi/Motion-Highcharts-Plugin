@@ -1,5 +1,5 @@
-$(function() {
-    $.getJSON('http://data.highcharts.local/jsonp.php?filename=world-population-history.json&callback=?', function(data) {
+$(function () {
+    $.getJSON('http://data.highcharts.local/jsonp.php?filename=world-population-history.json&callback=?', function (data) {
         // console.log(data.entries[0]);
         // Initiate the chart
         $('#container').highcharts('Map', {
@@ -68,13 +68,7 @@ $(function() {
             }]
         });
     });
-    (function(H) {
-
-        H.Chart.prototype.callbacks.push(function(chart) {
-            if (chart.options.timeline && chart.options.timeline.enabled) {
-                chart.timeline = new Timeline(chart);
-            }
-        });
+    (function (H) {
 
         // Sets up elements and initial values
         function Timeline(chart) {
@@ -97,7 +91,7 @@ $(function() {
 
             // Play-controls HTML-div
             this.playControls = H.createElement('div', {
-                id: 'play-controls',
+                id: 'play-controls'
             }, null, this.chart.renderTo, null);
 
             // Play/pause HTML-button
@@ -126,13 +120,13 @@ $(function() {
 
             this.inputValue = parseFloat(this.playRange.value);
 
-            Highcharts.addEvent(this.playPauseBtn, 'click', function() {
+            Highcharts.addEvent(this.playPauseBtn, 'click', function () {
                 timeline.togglePlayPause();
             });
-            Highcharts.addEvent(this.playRange, 'mouseup', function() {
+            Highcharts.addEvent(this.playRange, 'mouseup', function () {
                 timeline.attractToStep();
             });
-            Highcharts.addEvent(this.playRange, 'input', function() {
+            Highcharts.addEvent(this.playRange, 'input', function () {
                 timeline.updateChart(this.value);
             });
 
@@ -142,39 +136,46 @@ $(function() {
 
         // Toggles between Play and Pause states, and makes calls to changeButtonType()
         // From http://www.creativebloq.com/html5/build-custom-html5-video-player-9134473
-        Timeline.prototype.togglePlayPause = function() {
+        Timeline.prototype.togglePlayPause = function () {
             if (this.paused) {
                 this.play();
             } else {
                 this.pause();
             }
-        }
+        };
 
-        Timeline.prototype.play = function() {
+        // Plays the timeline, continuously updating the chart
+        Timeline.prototype.play = function () {
             var timeline = this;
-            this.changeButtonType(this.playPauseBtn, 'pause');
+            this.changeButtonType('pause');
             this.paused = false;
-            this.timer = setInterval(function() {
+            this.timer = setInterval(function () {
                 timeline.playUpdate();
             }, 10);
-        }
+        };
 
-        Timeline.prototype.pause = function() {
-            this.changeButtonType(this.playPauseBtn, 'play');
+        // Pauses the timeline, which stops updating the chart
+        Timeline.prototype.pause = function () {
+            this.changeButtonType('play');
             this.paused = true;
-            clearInterval(this.timer);
+            window.clearInterval(this.timer);
             this.attractToStep();
-        }
+        };
+
+        // Resets the timeline and updates the chart. Does not pause
+        Timeline.prototype.reset = function () {
+            this.playRange.value = this.startValue;
+            this.updateChart();
+        };
 
         // Updates a button's title, innerHTML and CSS class to a certain value
-        Timeline.prototype.changeButtonType = function(btn, value) {
-            btn.title = value;
-            btn.className = value + " fa fa-" + value;
-        }
+        Timeline.prototype.changeButtonType = function (value) {
+            this.playPauseBtn.title = value;
+            this.playPauseBtn.className = value + " fa fa-" + value;
+        };
 
         // Called continuously while playing
-        Timeline.prototype.playUpdate = function() {
-            var timeline = this;
+        Timeline.prototype.playUpdate = function () {
             if (!this.paused) {
                 this.inputValue = parseFloat(this.playRange.value);
                 this.playRange.value = this.inputValue + this.step;
@@ -184,15 +185,15 @@ $(function() {
                     this.togglePlayPause();
                 }
             }
-        }
+        };
 
         // Updates chart data and calls redraw after all points are updated
-        Timeline.prototype.updateChart = function(inputValue) {
+        Timeline.prototype.updateChart = function (inputValue) {
             var timeline = this;
             this.inputValue = this.round(inputValue);
             if (this.currentAxisValue !== this.inputValue) {
                 this.currentAxisValue = this.inputValue;
-                Highcharts.each(this.points, function(point, i) {
+                Highcharts.each(this.points, function (point, i) {
                     if (timeline.entries[i].data[timeline.inputValue - timeline.startValue]) {
                         point.update(timeline.entries[i].data[timeline.inputValue - timeline.startValue], false);
                     }
@@ -202,10 +203,10 @@ $(function() {
                 });
                 this.attractToStep();
             }
-        }
+        };
 
-        // TODO: De-uglify. Maybe recursive?
-        Timeline.prototype.findData = function(i, key) {
+        // TODO: De-uglify and make it work. Maybe recursive?
+        Timeline.prototype.findData = function (i, key) {
             var firstLevelData,
                 secondLevelData,
                 thirdLevelData;
@@ -228,11 +229,11 @@ $(function() {
             } else {
                 return firstLevelData;
             }
-        }
+        };
 
         // Emphasizes current value either by moving thumb against point,
         // or highlighting point
-        Timeline.prototype.attractToStep = function() {
+        Timeline.prototype.attractToStep = function () {
             if (this.magnetType === 'thumb' && (this.paused || !this.smoothThumb)) {
                 this.attractThumb();
             } else if (this.magnetType === 'point') {
@@ -241,22 +242,28 @@ $(function() {
                 if (!this.smoothThumb) {
                     this.attractThumb();
                 }
-                            this.attractPoint();
+                this.attractPoint();
             }
-        }
+        };
 
-        Timeline.prototype.attractThumb = function() {
+        Timeline.prototype.attractThumb = function () {
             this.playRange.value = this.round(this.playRange.value);
-        }
+        };
 
-        Timeline.prototype.attractPoint = function() {
+        Timeline.prototype.attractPoint = function () {
             this.playOutput.innerHTML = this.round(this.playRange.value);
-        }
+        };
 
         // Returns an integer rounded up, down or even depending on
         // timeline.magnet.round settings.
-        Timeline.prototype.round = function(number) {
+        Timeline.prototype.round = function (number) {
             return Math[this.roundType](number);
-        }
+        };
+
+        H.Chart.prototype.callbacks.push(function (chart) {
+            if (chart.options.timeline && chart.options.timeline.enabled) {
+                chart.timeline = new Timeline(chart);
+            }
+        });
     }(Highcharts));
 });
