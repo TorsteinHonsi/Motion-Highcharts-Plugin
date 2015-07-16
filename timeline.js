@@ -27,9 +27,9 @@
         // Play/pause HTML-button
         this.playPauseBtn = H.createElement('button', {
             id: 'play-pause-button',
-            class: 'play fa fa-play',
             title: 'play'
         }, null, this.playControls, null);
+        this.playPauseBtn.className = "fa fa-play";
 
         // Play-range HTML-input
         this.playRange = H.createElement('input', {
