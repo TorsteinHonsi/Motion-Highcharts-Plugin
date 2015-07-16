@@ -1,0 +1,19 @@
+{
+	"name": "Timeline",
+	"version": "1.0",
+	"title": "Playable HTML5 timeline",
+	"author": {
+		"name": "Lars Cabrera",
+		"url": "https://github.com/larsac07/Timeline-Highcharts-Plugin"
+	},
+	"licenses": [
+		{
+			"type": "none",
+			"url": "none"
+		}
+	],
+	"dependencies": {
+		"highcharts": "4.1"
+	},
+	"type": "plugin"
+}
