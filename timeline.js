@@ -6,14 +6,18 @@
             settings;
         // timeline settings variables
         this.chart = chart;
+        if (!this.chart.options.timeline.enabled) {
+            return;
+        }
         this.timelineSettings = settings = this.chart.options.timeline;
-        this.entries = settings.data;
-        this.dataStructure = settings.dataStructure;
-        this.startValue = settings.start;
+        this.entries = this.chart.series[settings.series].data;
+        this.beginValue = settings.begin;
         this.endValue = settings.end;
         this.paused = true;
-        this.currentAxisValue = 0;
-        this.points = this.chart.series[settings.series].points;
+        this.updateInterval = settings.updateInterval;
+        this.currentAxisValue = this.beginValue - 1;
+        this.dataSeries = this.chart.series[settings.series];
+        this.points = this.dataSeries.points;
         this.magnetType = settings.magnet.type;
         this.roundType = settings.magnet.round;
         this.smoothThumb = (settings.magnet.smoothThumb !== undefined) ? settings.magnet.smoothThumb : true;
@@ -35,18 +39,18 @@
         this.playRange = H.createElement('input', {
             id: 'play-range',
             type: 'range',
-            value: this.startValue,
-            min: this.startValue,
-            max: this.endValue,
+            value: 0,
+            min: 0,
+            max: this.endValue - this.beginValue,
             step: this.step
         }, null, this.playControls, null);
 
         // Play-range HTML-output
-        this.playOutput = H.createElement('output', {
+        this.playOutput = H.createElement('label', {
             id: 'play-output',
-            for: 'play-range',
             name: this.timelineSettings.axisLabel
         }, null, this.playControls, null);
+        this.playOutput.innerHTML = this.beginValue;
 
         this.inputValue = parseFloat(this.playRange.value);
 
@@ -60,7 +64,6 @@
             timeline.updateChart(this.value);
         });
 
-        this.playOutput.innerHTML = this.round(this.playRange.value);
         this.updateChart(this.playRange.value);
     }
 
@@ -81,7 +84,7 @@
         this.paused = false;
         this.timer = setInterval(function () {
             timeline.playUpdate();
-        }, 10);
+        }, this.updateInterval);
     };
 
     // Pauses the timeline, which stops updating the chart
@@ -94,7 +97,7 @@
 
     // Resets the timeline and updates the chart. Does not pause
     Timeline.prototype.reset = function () {
-        this.playRange.value = this.startValue;
+        this.playRange.value = this.beginValue;
         this.updateChart();
     };
 
@@ -111,8 +114,8 @@
             this.playRange.value = this.inputValue + this.step;
             this.attractToStep();
             this.updateChart(this.playRange.value); // Use playRange.value to get updated value
-            if (this.playRange.value >= this.playRange.max) {
-                this.togglePlayPause();
+            if (this.inputValue >= parseFloat(this.playRange.max)) {
+                this.pause();
             }
         }
     };
@@ -120,30 +123,21 @@
     // Updates chart data and calls redraw after all points are updated
     Timeline.prototype.updateChart = function (inputValue) {
         var timeline = this,
-            entryData;
+            entryData = [],
+            newEntry;
         this.inputValue = this.round(inputValue);
         if (this.currentAxisValue !== this.inputValue) {
             this.currentAxisValue = this.inputValue;
-            Highcharts.each(this.points, function (point, i) {
-                entryData = timeline.findData(i);
-                if (entryData) {
-                    point.update(entryData, false);
-                }
+            Highcharts.each(this.entries, function (entry) {
+                newEntry = entry;
+                newEntry.z = entry.data[timeline.inputValue];
+                // console.log(timeline.inputValue, entry.data[this.inputValue]);
+                entryData.push(newEntry);
             });
-            this.chart.redraw({
-                duration: 200 // Animation duration
-            });
-            this.attractToStep();
-        }
-    };
-
-    // TODO: De-uglify and make it work. Maybe recursive?
-    Timeline.prototype.findData = function (i) {
-        console.log(this);
-        if (this.dataStructure.reversed) {
-            return this.entries[i][this.dataStructure.dataKey][this.inputValue - this.startValue];
-        } else {
-            return this.entries[this.inputValue][i];
+            setTimeout(function () {
+                timeline.dataSeries.setData(entryData, true);
+                timeline.attractToStep();
+            }, 1);
         }
     };
 
@@ -163,11 +157,11 @@
     };
 
     Timeline.prototype.attractThumb = function () {
-        this.playRange.value = this.round(this.playRange.value);
+        this.playRange.value = this.playRange.value;
     };
 
     Timeline.prototype.attractPoint = function () {
-        this.playOutput.innerHTML = this.round(this.playRange.value);
+        this.playOutput.innerHTML = this.round(this.playRange.value) + this.beginValue;
     };
 
     // Returns an integer rounded up, down or even depending on
