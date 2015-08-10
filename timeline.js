@@ -52,8 +52,7 @@
         }, null, this.playControls, null);
         this.playOutput.innerHTML = this.beginValue;
 
-        this.inputValue = parseFloat(this.playRange.value);
-
+        // Bind controls to events
         Highcharts.addEvent(this.playPauseBtn, 'click', function () {
             timeline.togglePlayPause();
         });
@@ -64,6 +63,33 @@
             timeline.updateChart(this.value);
         });
 
+        function handleKeyEvents(e) {
+            e = e || window.event;
+            switch(e.which) {
+                case 32: // Space
+                    timeline.togglePlayPause();
+                    break;
+                case 37: // Left
+                    timeline.playRange.value = parseFloat(timeline.playRange.value) - 1
+                    timeline.updateChart(timeline.playRange.value);
+                    break;
+                case 39: // Right
+                    timeline.playRange.value = parseFloat(timeline.playRange.value) + 1
+                    timeline.updateChart(timeline.playRange.value);
+                    break;
+                default: return;
+            }
+            e.preventDefault();
+        }
+
+        // Bind keys to events
+        Highcharts.addEvent(this.playPauseBtn, 'keydown', handleKeyEvents);
+        Highcharts.addEvent(this.playRange, 'keydown', handleKeyEvents);
+
+        // Initial value
+        this.inputValue = parseFloat(this.playRange.value);
+
+        // Initial update
         this.updateChart(this.playRange.value);
     }
 
@@ -114,30 +140,25 @@
             this.playRange.value = this.inputValue + this.step;
             this.attractToStep();
             this.updateChart(this.playRange.value); // Use playRange.value to get updated value
-            if (this.inputValue >= parseFloat(this.playRange.max)) {
+            if (this.inputValue >= parseFloat(this.playRange.max)) { // Auto-pause
+                this.playRange.value = this.inputValue + this.step;
                 this.pause();
             }
         }
     };
 
-    // Updates chart data and calls redraw after all points are updated
+    // Updates chart data and redraws the chart
     Timeline.prototype.updateChart = function (inputValue) {
-        var timeline = this,
-            entryData = [],
-            newEntry;
+        var timeline = this;
         this.inputValue = this.round(inputValue);
         if (this.currentAxisValue !== this.inputValue) {
             this.currentAxisValue = this.inputValue;
             Highcharts.each(this.entries, function (entry) {
-                newEntry = entry;
-                newEntry.z = entry.data[timeline.inputValue];
-                // console.log(timeline.inputValue, entry.data[this.inputValue]);
-                entryData.push(newEntry);
+                delete entry.color;
+                entry.z = entry.value = entry.data[timeline.inputValue];
             });
-            setTimeout(function () {
-                timeline.dataSeries.setData(entryData, true);
-                timeline.attractToStep();
-            }, 1);
+            timeline.dataSeries.setData(this.entries, true);
+            timeline.attractToStep();
         }
     };
 
