@@ -9,15 +9,59 @@
         if (!this.chart.options.timeline.enabled) {
             return;
         }
+        console.log(H.seriesTypes);
+        if (H.seriesTypes.area) {
+            H.seriesTypes.area.prototype.valueToUpdate = 'y';
+        }
+        if (H.seriesTypes.areaspline) {
+            H.seriesTypes.areaspline.prototype.valueToUpdate = 'y';
+        }
+        if (H.seriesTypes.bubble) {
+            H.seriesTypes.bubble.prototype.valueToUpdate = 'z';
+        }
+        if (H.seriesTypes.column) {
+            H.seriesTypes.column.prototype.valueToUpdate = 'y';
+        }
+        if (H.seriesTypes.heatmap) {
+            H.seriesTypes.heatmap.prototype.valueToUpdate = 'value';
+        }
+        if (H.seriesTypes.line) {
+            H.seriesTypes.line.prototype.valueToUpdate = 'value';
+        }
+        if (H.seriesTypes.map) {
+            H.seriesTypes.map.prototype.valueToUpdate = 'value';
+        }
+        if (H.seriesTypes.mapbubble) {
+            H.seriesTypes.mapbubble.prototype.valueToUpdate = 'z';
+        }
+        if (H.seriesTypes.mapline) {
+            H.seriesTypes.mapline.prototype.valueToUpdate = ['x', 'y']; // TODO: support for multiple axis updates
+        }
+        if (H.seriesTypes.mappoint) {
+            H.seriesTypes.mappoint.prototype.valueToUpdate = ['x', 'y'];
+        }
+        if (H.seriesTypes.pie) {
+            H.seriesTypes.pie.prototype.valueToUpdate = 'y';
+        }
+        if (H.seriesTypes.scatter) {
+            H.seriesTypes.scatter.prototype.valueToUpdate = ['x', 'y'];
+        }
         this.timelineSettings = settings = this.chart.options.timeline;
-        this.entries = this.chart.series[settings.series].data;
+        this.dataSeries = [];
+        if (settings.series.constructor === Array) { // Multiple series with data
+            Highcharts.each(this.chart.series, function (series, index) {
+                if (settings.series.indexOf(index) >= 0) {
+                    timeline.dataSeries[index] = series;
+                }
+            });
+        } else { // Only one series with data
+            this.dataSeries[settings.series] = this.chart.series[settings.series];
+        }
         this.beginValue = settings.begin;
         this.endValue = settings.end;
         this.paused = true;
         this.updateInterval = settings.updateInterval;
         this.currentAxisValue = this.beginValue - 1;
-        this.dataSeries = this.chart.series[settings.series];
-        this.points = this.dataSeries.points;
         this.magnetType = settings.magnet.type;
         this.roundType = settings.magnet.round;
         this.smoothThumb = (settings.magnet.smoothThumb !== undefined) ? settings.magnet.smoothThumb : true;
@@ -39,7 +83,7 @@
         this.playRange = H.createElement('input', {
             id: 'play-range',
             type: 'range',
-            value: 0,
+            value: this.endValue - this.beginValue,
             min: 0,
             max: this.endValue - this.beginValue,
             step: this.step
@@ -65,23 +109,27 @@
 
         function handleKeyEvents(e) {
             e = e || window.event;
-            switch(e.which) {
-                case 32: // Space
-                    timeline.togglePlayPause();
-                    break;
-                case 37: // Left
-                    timeline.playRange.value = parseFloat(timeline.playRange.value) - 1
-                    timeline.updateChart(timeline.playRange.value);
-                    break;
-                case 39: // Right
-                    timeline.playRange.value = parseFloat(timeline.playRange.value) + 1
-                    timeline.updateChart(timeline.playRange.value);
-                    break;
-                default: return;
+            switch (e.which) {
+            case 32: // Space
+                timeline.togglePlayPause();
+                break;
+            case 37: // Left
+                timeline.playRange.value = timeline.round(parseFloat(timeline.playRange.value) - 1);
+                timeline.updateChart(timeline.playRange.value);
+                break;
+            case 39: // Right
+                timeline.playRange.value = timeline.round(parseFloat(timeline.playRange.value) + 1);
+                timeline.updateChart(timeline.playRange.value);
+                break;
+            default: return;
             }
             e.preventDefault();
         }
 
+        // Request focus to the controls when clicking on controls div
+        Highcharts.addEvent(this.playControls, 'click', function () {
+            timeline.playRange.focus();
+        });
         // Bind keys to events
         Highcharts.addEvent(this.playPauseBtn, 'keydown', handleKeyEvents);
         Highcharts.addEvent(this.playRange, 'keydown', handleKeyEvents);
@@ -106,6 +154,9 @@
     // Plays the timeline, continuously updating the chart
     Timeline.prototype.play = function () {
         var timeline = this;
+        if (this.paused && parseFloat(this.playRange.value) === parseFloat(this.playRange.max)) {
+            this.reset();
+        }
         this.changeButtonType('pause');
         this.paused = false;
         this.timer = setInterval(function () {
@@ -123,8 +174,8 @@
 
     // Resets the timeline and updates the chart. Does not pause
     Timeline.prototype.reset = function () {
-        this.playRange.value = this.beginValue;
-        this.updateChart();
+        var resetValue = this.playRange.value = this.playRange.min;
+        this.updateChart(resetValue);
     };
 
     // Updates a button's title, innerHTML and CSS class to a certain value
@@ -149,16 +200,30 @@
 
     // Updates chart data and redraws the chart
     Timeline.prototype.updateChart = function (inputValue) {
-        var timeline = this;
+        var newPointOptions,
+            valueToUpdate,
+            seriesKey,
+            series,
+            point,
+            i;
         this.inputValue = this.round(inputValue);
         if (this.currentAxisValue !== this.inputValue) {
             this.currentAxisValue = this.inputValue;
-            Highcharts.each(this.entries, function (entry) {
-                delete entry.color;
-                entry.z = entry.value = entry.data[timeline.inputValue];
-            });
-            timeline.dataSeries.setData(this.entries, true);
-            timeline.attractToStep();
+            for (seriesKey in this.dataSeries) {
+                if (this.dataSeries.hasOwnProperty(seriesKey)) {
+                    series = this.dataSeries[seriesKey];
+                    for (i = 0; i < series.data.length; i++) {
+                        point = series.data[i];
+                        valueToUpdate = series.valueToUpdate;
+                        console.log(valueToUpdate);
+                        newPointOptions = {};
+                        newPointOptions[valueToUpdate] = point.data[this.inputValue];
+                        point.update(newPointOptions, false, false);
+                    }
+                }
+            }
+            this.chart.redraw();
+            this.attractToStep();
         }
     };
 
@@ -178,7 +243,7 @@
     };
 
     Timeline.prototype.attractThumb = function () {
-        this.playRange.value = this.playRange.value;
+        this.playRange.value = this.round(this.playRange.value);
     };
 
     Timeline.prototype.attractPoint = function () {
