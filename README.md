@@ -21,8 +21,8 @@ Add a `timeline: {}` option object to your chart options:
 ...
 timeline: {
     enabled: true, // optional. Defaults to true
-    begin: 2000, // required
-    end: 2010, // required
+    begin: 2000, // required. Timeline currently only supports whole years.
+    end: 2010, // required. See begin.
     series: 0, // required. The series which holds points to update. Integer or Array of integers
     axisLabel: 'year', // optional. name-attribute of timeline slider. Defaults to 'year'
     autoPlay : true, // optional. Defaults to false
