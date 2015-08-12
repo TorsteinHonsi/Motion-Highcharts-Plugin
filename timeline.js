@@ -9,43 +9,6 @@
         if (!this.chart.options.timeline.enabled) {
             return;
         }
-        console.log(H.seriesTypes);
-        if (H.seriesTypes.area) {
-            H.seriesTypes.area.prototype.valueToUpdate = 'y';
-        }
-        if (H.seriesTypes.areaspline) {
-            H.seriesTypes.areaspline.prototype.valueToUpdate = 'y';
-        }
-        if (H.seriesTypes.bubble) {
-            H.seriesTypes.bubble.prototype.valueToUpdate = 'z';
-        }
-        if (H.seriesTypes.column) {
-            H.seriesTypes.column.prototype.valueToUpdate = 'y';
-        }
-        if (H.seriesTypes.heatmap) {
-            H.seriesTypes.heatmap.prototype.valueToUpdate = 'value';
-        }
-        if (H.seriesTypes.line) {
-            H.seriesTypes.line.prototype.valueToUpdate = 'value';
-        }
-        if (H.seriesTypes.map) {
-            H.seriesTypes.map.prototype.valueToUpdate = 'value';
-        }
-        if (H.seriesTypes.mapbubble) {
-            H.seriesTypes.mapbubble.prototype.valueToUpdate = 'z';
-        }
-        if (H.seriesTypes.mapline) {
-            H.seriesTypes.mapline.prototype.valueToUpdate = ['x', 'y']; // TODO: support for multiple axis updates
-        }
-        if (H.seriesTypes.mappoint) {
-            H.seriesTypes.mappoint.prototype.valueToUpdate = ['x', 'y'];
-        }
-        if (H.seriesTypes.pie) {
-            H.seriesTypes.pie.prototype.valueToUpdate = 'y';
-        }
-        if (H.seriesTypes.scatter) {
-            H.seriesTypes.scatter.prototype.valueToUpdate = ['x', 'y'];
-        }
         this.timelineSettings = settings = this.chart.options.timeline;
         this.dataSeries = [];
         if (settings.series.constructor === Array) { // Multiple series with data
@@ -214,11 +177,11 @@
                     series = this.dataSeries[seriesKey];
                     for (i = 0; i < series.data.length; i++) {
                         point = series.data[i];
-                        valueToUpdate = series.valueToUpdate;
-                        console.log(valueToUpdate);
-                        newPointOptions = {};
-                        newPointOptions[valueToUpdate] = point.data[this.inputValue];
-                        point.update(newPointOptions, false, false);
+                        try {
+                            point.update(point.data[this.inputValue], false, false);
+                        } catch (e) {
+                            console.error('Error:', e, ' at point:', point, ' with new value:', point.data[this.inputValue]);
+                        }
                     }
                 }
             }
