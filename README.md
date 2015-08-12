@@ -6,7 +6,7 @@ The Timeline Highcharts Plugin adds an interactive timeline to any Highcharts ch
 Before reporting an issue, please follow these guidelines:
 * Thoroughly check if the issue already exists
 * Make sure the report includes a reproducible demo. Use for example [Highcharts' own standard jsFiddle](http://jsfiddle.net/highcharts/llexl/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
-* Describe your environment. Not the weather, but 
+* Describe your environment. Not the weather, but what kind of operating system (and version), browser, javascript frameworks and other Highcharts plugins you are using
 
 ## Usage
 ### 1. Import Timeline Script
