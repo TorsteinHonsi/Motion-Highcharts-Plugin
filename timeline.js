@@ -22,13 +22,25 @@
         }
         this.beginValue = settings.begin;
         this.endValue = settings.end;
+        this.loop = settings.loop === true;
         this.paused = true;
         this.updateInterval = settings.updateInterval;
         this.currentAxisValue = this.beginValue - 1;
-        this.magnetType = settings.magnet.type;
-        this.roundType = settings.magnet.round;
-        this.smoothThumb = (settings.magnet.smoothThumb !== undefined) ? settings.magnet.smoothThumb : true;
-        this.step = settings.magnet.step;
+        this.magnetType = 'both';
+        this.roundType = 'round';
+        this.step = 0.01;
+        this.autoPlay = settings.autoPlay === true;
+        if (settings.magnet !== undefined) {
+            if (settings.magnet.type !== undefined) {
+                this.magnetType = settings.magnet.type;
+            }
+            if (settings.magnet.round !== undefined) {
+                this.roundType = settings.magnet.round;
+            }
+            if (settings.magnet.step !== undefined) {
+                this.step = settings.magnet.step;
+            }
+        }
 
         // Play-controls HTML-div
         this.playControls = H.createElement('div', {
@@ -102,6 +114,9 @@
 
         // Initial update
         this.updateChart(this.playRange.value);
+        if (this.autoPlay) {
+            this.play();
+        }
     }
 
     // Toggles between Play and Pause states, and makes calls to changeButtonType()
@@ -154,18 +169,19 @@
             this.playRange.value = this.inputValue + this.step;
             this.attractToStep();
             this.updateChart(this.playRange.value); // Use playRange.value to get updated value
-            if (this.inputValue >= parseFloat(this.playRange.max)) { // Auto-pause
-                this.playRange.value = this.inputValue + this.step;
-                this.pause();
+            if (this.playRange.value >= parseFloat(this.playRange.max)) { // Auto-pause
+                if (this.loop) {
+                    this.reset();
+                } else {
+                    this.pause();
+                }
             }
         }
     };
 
     // Updates chart data and redraws the chart
     Timeline.prototype.updateChart = function (inputValue) {
-        var newPointOptions,
-            valueToUpdate,
-            seriesKey,
+        var seriesKey,
             series,
             point,
             i;
@@ -190,26 +206,8 @@
         }
     };
 
-    // Emphasizes current value either by moving thumb against point,
-    // or highlighting point
+    // Moves output value to data point
     Timeline.prototype.attractToStep = function () {
-        if (this.magnetType === 'thumb' && (this.paused || !this.smoothThumb)) {
-            this.attractThumb();
-        } else if (this.magnetType === 'point') {
-            this.attractPoint();
-        } else if (this.magnetType === 'both') {
-            if (!this.smoothThumb) {
-                this.attractThumb();
-            }
-            this.attractPoint();
-        }
-    };
-
-    Timeline.prototype.attractThumb = function () {
-        this.playRange.value = this.round(this.playRange.value);
-    };
-
-    Timeline.prototype.attractPoint = function () {
         this.playOutput.innerHTML = this.round(this.playRange.value) + this.beginValue;
     };
 
