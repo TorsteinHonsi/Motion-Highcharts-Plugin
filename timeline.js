@@ -29,8 +29,15 @@
         this.endValue = settings.end;
         this.loop = settings.loop === true;
         this.paused = true;
-        this.updateInterval = settings.updateInterval;
+        this.updateInterval = 10;
+        if (settings.updateInterval !== undefined) {
+            this.updateInterval = settings.updateInterval;
+        }
         this.currentAxisValue = this.beginValue - 1;
+        this.axisLabel = 'year';
+        if (settings.axisLabel !== undefined) {
+            this.axisLabel = settings.axisLabel;
+        }
 
         // Magnet settings
         this.magnetType = 'both';
