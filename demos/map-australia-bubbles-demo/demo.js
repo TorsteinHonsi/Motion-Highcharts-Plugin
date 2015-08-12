@@ -57,23 +57,16 @@ $(function () {
             }
         },
 
-        colorAxis: {
-            min: 0,
-            max: 10000
-        },
-
         timeline: {
             enabled: true,
             axisLabel: 'year',
             begin: 2000,
             end: 2010,
-            // TODO add interval
+            loop: true,
             series: 1, // The series which holds points to update
             updateInterval: 50,
             magnet: {
-                type: 'both', // thumb / point / both
-                round: 'floor', // ceil / floor / round
-                smoothThumb: true, // defaults to true
+                round: 'round', // ceil / floor / round
                 step: 0.1
             }
         },

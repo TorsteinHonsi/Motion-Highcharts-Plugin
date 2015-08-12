@@ -35,13 +35,10 @@ $(function () {
                 axisLabel: 'year',
                 begin: data.info.start,
                 end: data.info.end,
-                // TODO add interval
                 series: 1, // The series which holds points to update
                 updateInterval: 10,
                 magnet: {
-                    type: 'both', // thumb / point / both
                     round: 'floor', // ceil / floor / round
-                    smoothThumb: true, // defaults to true
                     step: 0.1
                 }
             },

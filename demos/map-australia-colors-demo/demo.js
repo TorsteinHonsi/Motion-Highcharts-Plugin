@@ -83,9 +83,7 @@ $(function () {
             series: 0, // The series which holds points to update
             updateInterval: 50,
             magnet: {
-                type: 'both', // thumb / point / both
                 round: 'floor', // ceil / floor / round
-                smoothThumb: true, // defaults to true
                 step: 0.1
             }
         },

@@ -17,13 +17,11 @@ $(function () {
             axisLabel: 'year',
             begin: 2005,
             end: 2009,
-            // TODO add interval
+            loop: true,
             series: [0, 1], // The series which holds points to update
             updateInterval: 20,
             magnet: {
-                type: 'both', // thumb / point / both
                 round: 'floor', // ceil / floor / round
-                smoothThumb: true, // defaults to true
                 step: 0.01
             }
         },

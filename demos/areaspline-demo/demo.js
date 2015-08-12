@@ -55,12 +55,10 @@ $(function () {
             begin: 2000,
             end: 2010,
             series: [0, 1], // The series which holds points to update
-            updateInterval: 20,
+            updateInterval: 15,
             magnet: {
-                type: 'both', // thumb / point / both
                 round: 'floor', // ceil / floor / round
-                smoothThumb: true, // defaults to true
-                step: 0.01
+                step: 0.02
             }
         },
         series: [{
