@@ -1,11 +1,18 @@
-(function (H) {
+/**
+ * @license http://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+ * @author  Lars Cabrera
+ * @version 1.0
+ */
 
+// JSLint options:
+/*global Highcharts, window*/
+
+(function (H) {
     // Sets up timeline ready to use
     function Timeline(chart) {
         var timeline = this,
             settings;
 
-        // Set timeline object variables
         this.chart = chart;
         this.timelineSettings = settings = this.chart.options.timeline;
         this.dataSeries = [];
@@ -24,6 +31,8 @@
         this.paused = true;
         this.updateInterval = settings.updateInterval;
         this.currentAxisValue = this.beginValue - 1;
+
+        // Magnet settings
         this.magnetType = 'both';
         this.roundType = 'round';
         this.step = 0.01;
@@ -94,7 +103,8 @@
                 timeline.playRange.value = timeline.round(parseFloat(timeline.playRange.value) + 1);
                 timeline.updateChart(timeline.playRange.value);
                 break;
-            default: return;
+            default:
+                return;
             }
             e.preventDefault();
         }
@@ -111,7 +121,9 @@
         this.inputValue = parseFloat(this.playRange.value);
 
         // Initial update
-        this.updateChart(this.playRange.value);
+        this.updateChart(this.inputValue);
+
+        // Auto-play
         if (this.autoPlay) {
             this.play();
         }
@@ -150,8 +162,8 @@
 
     // Resets the timeline and updates the chart. Does not pause
     Timeline.prototype.reset = function () {
-        var resetValue = this.playRange.value = this.playRange.min;
-        this.updateChart(resetValue);
+        this.playRange.value = this.playRange.min;
+        this.updateChart(this.playRange.value);
     };
 
     // Updates a button's title, innerHTML and CSS class to a certain value
@@ -194,7 +206,7 @@
                         try {
                             point.update(point.data[this.inputValue], false, false);
                         } catch (e) {
-                            console.error('Error:', e, ' at point:', point, ' with new value:', point.data[this.inputValue]);
+                            console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.data[this.inputValue]);
                         }
                     }
                 }
@@ -215,6 +227,8 @@
         return Math[this.roundType](number);
     };
 
+    // Initiates timeline automatically if timeline settings object exists and
+    // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
         if (chart.options.timeline !== undefined && chart.options.timeline.enabled !== false) {
             chart.timeline = new Timeline(chart);
