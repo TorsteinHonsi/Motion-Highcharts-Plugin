@@ -1,14 +1,12 @@
 (function (H) {
 
-    // Sets up elements and initial values
+    // Sets up timeline ready to use
     function Timeline(chart) {
         var timeline = this,
             settings;
-        // timeline settings variables
+
+        // Set timeline object variables
         this.chart = chart;
-        if (!this.chart.options.timeline.enabled) {
-            return;
-        }
         this.timelineSettings = settings = this.chart.options.timeline;
         this.dataSeries = [];
         if (settings.series.constructor === Array) { // Multiple series with data
@@ -218,7 +216,7 @@
     };
 
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.timeline && chart.options.timeline.enabled) {
+        if (chart.options.timeline !== undefined && chart.options.timeline.enabled !== false) {
             chart.timeline = new Timeline(chart);
         }
     });
