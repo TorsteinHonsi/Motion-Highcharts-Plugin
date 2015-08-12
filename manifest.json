@@ -6,10 +6,18 @@
 		"name": "Lars Cabrera",
 		"url": "https://github.com/larsac07/Timeline-Highcharts-Plugin"
 	},
+	"description": "Adds a playable HTML5 timeline to the chart.",
+	"keywords": ["timeline", "html5", "play", "live", "moving", "slider"],
 	"licenses": [
 		{
-			"type": "none",
-			"url": "none"
+			"type": "Creative Commons Attribution-ShareAlike 4.0 International License",
+			"url": "http://creativecommons.org/licenses/by-sa/4.0/"
+		}
+	],
+	"maintainers": [
+		{
+			"name": "Lars Cabrera",
+			"email": "larsac07@gmail.com"
 		}
 	],
 	"dependencies": {
