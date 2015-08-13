@@ -17,5 +17,5 @@ Go see the [Usage Wiki page](https://github.com/larsac07/Timeline-Highcharts-Plu
 ## Reporting Issues
 Before reporting an issue, please follow these guidelines:
 * Thoroughly check if the issue already exists
-* Make sure the report includes a reproducible demo. Use for example [Highcharts' own standard jsFiddle](http://jsfiddle.net/highcharts/llexl/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
+* Make sure the report includes a reproducible demo. Use for example [this simple demo](http://jsfiddle.net/larsac07/hs2ujwok/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
 * Describe your environment. Not the weather, but what kind of operating system (and version), browser, javascript frameworks and other Highcharts plugins you are using
