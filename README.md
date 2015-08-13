@@ -2,11 +2,13 @@
 The Timeline Highcharts Plugin adds an interactive HTML5 timeline to any Highcharts chart (Highcharts, Highmaps and Highstock).
 ![Screenshot of bar chart with timeline](screenshots/timeline_bars_screenshot.png)
 
-## Reporting Issues
-Before reporting an issue, please follow these guidelines:
-* Thoroughly check if the issue already exists
-* Make sure the report includes a reproducible demo. Use for example [Highcharts' own standard jsFiddle](http://jsfiddle.net/highcharts/llexl/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
-* Describe your environment. Not the weather, but what kind of operating system (and version), browser, javascript frameworks and other Highcharts plugins you are using
+## Demos
+* [Pie](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [3D Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/3dbars-demo/)
+* [Area spline](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [Map (AU) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [Map (World) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
 
 ## Usage
 To start using the plugin, follow these three steps:
@@ -68,3 +70,9 @@ Timeline currently supports the following controls:
 * navigating the timeline by hitting the left and right arrow keys
 
 **NB!** To make key input work, make sure the timeline is in focus by selecting it first
+
+## Reporting Issues
+Before reporting an issue, please follow these guidelines:
+* Thoroughly check if the issue already exists
+* Make sure the report includes a reproducible demo. Use for example [Highcharts' own standard jsFiddle](http://jsfiddle.net/highcharts/llexl/), adding your own code and stripping it down to an absolute minimum needed to demonstrate the bug.
+* Describe your environment. Not the weather, but what kind of operating system (and version), browser, javascript frameworks and other Highcharts plugins you are using

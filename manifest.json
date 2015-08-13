@@ -14,6 +14,14 @@
 			"url": "http://creativecommons.org/licenses/by-sa/4.0/"
 		}
 	],
+	"demo": [
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/",
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/3dbars-demo/",
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/",
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/",
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/",
+		"http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/"
+	],
 	"maintainers": [
 		{
 			"name": "Lars Cabrera",
