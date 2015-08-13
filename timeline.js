@@ -25,7 +25,7 @@
         } else { // Only one series with data
             this.dataSeries[settings.series] = this.chart.series[settings.series];
         }
-        this.timePoints = settings.timePoints;
+        this.labels = settings.labels;
         this.loop = settings.loop === true;
         this.paused = true;
         this.updateInterval = 10;
@@ -70,9 +70,9 @@
         this.playRange = H.createElement('input', {
             id: 'play-range',
             type: 'range',
-            value: this.timePoints.length - 1,
+            value: this.labels.length - 1,
             min: 0,
-            max: this.timePoints.length - 1,
+            max: this.labels.length - 1,
             step: this.step
         }, null, this.playControls, null);
 
@@ -81,7 +81,7 @@
             id: 'play-output',
             name: this.timelineSettings.axisLabel
         }, null, this.playControls, null);
-        this.playOutput.innerHTML = this.timePoints[this.timePoints.length - 1];
+        this.playOutput.innerHTML = this.labels[this.labels.length - 1];
 
         // Bind controls to events
         Highcharts.addEvent(this.playPauseBtn, 'click', function () {
@@ -223,7 +223,7 @@
 
     // Moves output value to data point
     Timeline.prototype.attractToStep = function () {
-        this.playOutput.innerHTML = this.timePoints[this.round(this.playRange.value)];
+        this.playOutput.innerHTML = this.labels[this.round(this.playRange.value)];
     };
 
     // Returns an integer rounded up, down or even depending on

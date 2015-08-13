@@ -52,7 +52,7 @@ $(function () {
         timeline: {
             enabled: true,
             axisLabel: 'Week',
-            timePoints: [
+            labels: [
                 "Week 31", "Week 32", "Week 33", "Week 34",
                 "Week 35", "Week 36", "Week 37", "Week 38",
                 "Week 39", "Week 40", "Week 41"

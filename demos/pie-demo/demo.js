@@ -15,7 +15,7 @@ $(function () {
         timeline: {
             enabled: true,
             axisLabel: 'year',
-            timePoints: [2005, 2006, 2007, 2008, 2009],
+            labels: [2005, 2006, 2007, 2008, 2009],
             loop: true,
             series: [0, 1], // The series which holds points to update
             updateInterval: 20,
