@@ -3,7 +3,7 @@ The Timeline Highcharts Plugin adds an interactive HTML5 timeline to any Highcha
 ![Screenshot of bar chart with timeline](screenshots/timeline_bars_screenshot.png)
 
 ## Demos
-* [Pie](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [Pie](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/pie-demo/)
 * [3D Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/3dbars-demo/)
 * [Area spline](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
 * [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
