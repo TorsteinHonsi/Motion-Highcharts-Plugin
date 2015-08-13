@@ -1,5 +1,5 @@
 $(function () {
-    $.getJSON('http://data.highcharts.local/jsonp.php?filename=world-population-history.json&callback=?', function (data) {
+    $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=world-population-history.json&callback=?', function (data) {
         // Initiate the chart
         $('#container').highcharts('Map', {
             title: {
@@ -25,16 +25,11 @@ $(function () {
                 }
             },
 
-            colorAxis: {
-                min: 0,
-                max: 10000
-            },
-
             timeline: {
                 enabled: true,
                 axisLabel: 'year',
                 begin: data.info.start,
-                end: data.info.end,
+                end: 2013,
                 series: 1, // The series which holds points to update
                 updateInterval: 10,
                 magnet: {
