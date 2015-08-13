@@ -4,11 +4,12 @@ The Timeline Highcharts Plugin adds an interactive HTML5 timeline to any Highcha
 
 ## Demos
 * [Pie](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/pie-demo/)
+* [Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/bars-demo/)
 * [3D Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/3dbars-demo/)
 * [Area spline](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
-* [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
-* [Map (AU) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
-* [Map (World) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/map-australia-colors-demo/)
+* [Map (AU) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/map-australia-bubbles-demo/)
+* [Map (World) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Timeline-Highcharts-Plugin/tree/master/demos/map-world-bubbles-demo/)
 
 ## Usage
 To start using the plugin, follow these three steps:
