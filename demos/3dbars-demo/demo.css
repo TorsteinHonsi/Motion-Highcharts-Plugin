@@ -1,14 +1,13 @@
 @import "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css";
 #container {
+    height: 300px;
     min-width: 310px;
     max-width: 800px;
     margin: 0 auto;
 }
-.highcharts-container {
-    height: 600px;
-}
 #sliders {
     text-align: center;
+    margin-top: 50px;
 }
 .slider-container {
     display: inline-block;
