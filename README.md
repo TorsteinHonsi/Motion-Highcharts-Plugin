@@ -1,5 +1,5 @@
 # Timeline Highcharts Plugin
-The Timeline Highcharts Plugin adds an interactive timeline to any Highcharts chart (Highcharts, Highmaps and Highstock).
+The Timeline Highcharts Plugin adds an interactive HTML5 timeline to any Highcharts chart (Highcharts, Highmaps and Highstock).
 ![Screenshot of bar chart with timeline](screenshots/timeline_bars_screenshot.png)
 
 ## Reporting Issues
@@ -15,6 +15,7 @@ Import `timeline.js` after you import Highcharts, Highmaps or Highstock:
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="path/or/url/to/timeline.js"></script>
 ```
+
 ### 2. Add Timeline Options
 Add a `timeline: {}` option object to your chart options:
 ```javascript
@@ -34,6 +35,7 @@ timeline: {
 },
 ...
 ```
+
 ### 3. Add Timeline Data
 Add a `data: []` array to each point with values to iterate through in ascending order:
 ```javascript
