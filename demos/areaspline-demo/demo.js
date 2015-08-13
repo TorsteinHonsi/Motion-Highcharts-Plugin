@@ -4,7 +4,7 @@ $(function () {
             type: 'areaspline'
         },
         title: {
-            text: 'Fruit consumption during some weeks'
+            text: 'Fruit consumption during a week'
         },
         legend: {
             layout: 'vertical',
@@ -51,9 +51,12 @@ $(function () {
         },
         timeline: {
             enabled: true,
-            axisLabel: 'year',
-            begin: 2000,
-            end: 2010,
+            axisLabel: 'Week',
+            timePoints: [
+                "Week 31", "Week 32", "Week 33", "Week 34",
+                "Week 35", "Week 36", "Week 37", "Week 38",
+                "Week 39", "Week 40", "Week 41"
+            ],
             series: [0, 1], // The series which holds points to update
             updateInterval: 15,
             magnet: {

@@ -9,6 +9,8 @@ Before reporting an issue, please follow these guidelines:
 * Describe your environment. Not the weather, but what kind of operating system (and version), browser, javascript frameworks and other Highcharts plugins you are using
 
 ## Usage
+To start using the plugin, follow these three steps:
+
 ### 1. Import Timeline Script
 Import `timeline.js` after you import Highcharts, Highmaps or Highstock:
 ```html
@@ -22,8 +24,7 @@ Add a `timeline: {}` option object to your chart options:
 ...
 timeline: {
     enabled: true, // optional. Defaults to true
-    begin: 2000, // required. Timeline currently only supports whole years.
-    end: 2010, // required. See begin.
+    timePoints: [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010], // required
     series: 0, // required. The series which holds points to update. Integer or Array of integers
     axisLabel: 'year', // optional. name-attribute of timeline slider. Defaults to 'year'
     autoPlay : true, // optional. Defaults to false
@@ -60,6 +61,9 @@ And that should be it!
 Timeline currently supports the following controls:
 * play/pause clicking the play/pause button
 * play/pause by hitting space
+* play by calling `Highcharts.charts[0].timeline.play()`
+* pause by calling `Highcharts.charts[0].timeline.pause()`
+* reset by calling `Highcharts.charts[0].timeline.reset()`
 * navigating the timeline by dragging the slider thumb
 * navigating the timeline by hitting the left and right arrow keys
 
