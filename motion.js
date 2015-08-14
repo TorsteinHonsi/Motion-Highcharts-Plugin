@@ -36,7 +36,6 @@
         } else { // Only one series with data
             this.dataSeries[this.options.series] = this.chart.series[this.options.series.series];
         }
-        console.log(this.dataLength);
 
         // Play-controls HTML-div
         this.playControls = H.createElement('div', {
@@ -153,7 +152,7 @@
         this.paused = false;
         this.timer = setInterval(function () {
             motion.playUpdate();
-        }, this.updateInterval);
+        }, this.options.updateInterval);
     };
 
     // Pauses the motion, which stops updating the chart
