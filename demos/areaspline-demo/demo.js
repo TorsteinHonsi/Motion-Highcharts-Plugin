@@ -49,7 +49,7 @@ $(function () {
                 fillOpacity: 0.5
             }
         },
-        timeline: {
+        motion: {
             enabled: true,
             axisLabel: 'Week',
             labels: [

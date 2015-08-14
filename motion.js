@@ -1,25 +1,25 @@
 /**
  * @license http://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
  * @author  Lars Cabrera
- * @version 1.0.1
+ * @version 1.0.3
  */
 
 // JSLint options:
 /*global Highcharts, window*/
 
 (function (H) {
-    // Sets up timeline ready to use
-    function Timeline(chart) {
-        var timeline = this,
+    // Sets up motion ready to use
+    function Motion(chart) {
+        var motion = this,
             settings;
 
         this.chart = chart;
-        this.timelineSettings = settings = this.chart.options.timeline;
+        this.motionSettings = settings = this.chart.options.motion;
         this.dataSeries = [];
         if (settings.series.constructor === Array) { // Multiple series with data
             Highcharts.each(this.chart.series, function (series, index) {
                 if (settings.series.indexOf(index) >= 0) {
-                    timeline.dataSeries[index] = series;
+                    motion.dataSeries[index] = series;
                 }
             });
         } else { // Only one series with data
@@ -79,34 +79,34 @@
         // Play-range HTML-output
         this.playOutput = H.createElement('label', {
             id: 'play-output',
-            name: this.timelineSettings.axisLabel
+            name: this.motionSettings.axisLabel
         }, null, this.playControls, null);
         this.playOutput.innerHTML = this.labels[this.labels.length - 1];
 
         // Bind controls to events
         Highcharts.addEvent(this.playPauseBtn, 'click', function () {
-            timeline.togglePlayPause();
+            motion.togglePlayPause();
         });
         Highcharts.addEvent(this.playRange, 'mouseup', function () {
-            timeline.attractToStep();
+            motion.attractToStep();
         });
         Highcharts.addEvent(this.playRange, 'input', function () {
-            timeline.updateChart(this.value);
+            motion.updateChart(this.value);
         });
 
         function handleKeyEvents(e) {
             e = e || window.event;
             switch (e.which) {
             case 32: // Space
-                timeline.togglePlayPause();
+                motion.togglePlayPause();
                 break;
             case 37: // Left
-                timeline.playRange.value = timeline.round(parseFloat(timeline.playRange.value) - 1);
-                timeline.updateChart(timeline.playRange.value);
+                motion.playRange.value = motion.round(parseFloat(motion.playRange.value) - 1);
+                motion.updateChart(motion.playRange.value);
                 break;
             case 39: // Right
-                timeline.playRange.value = timeline.round(parseFloat(timeline.playRange.value) + 1);
-                timeline.updateChart(timeline.playRange.value);
+                motion.playRange.value = motion.round(parseFloat(motion.playRange.value) + 1);
+                motion.updateChart(motion.playRange.value);
                 break;
             default:
                 return;
@@ -116,7 +116,7 @@
 
         // Request focus to the controls when clicking on controls div
         Highcharts.addEvent(this.playControls, 'click', function () {
-            timeline.playRange.focus();
+            motion.playRange.focus();
         });
         // Bind keys to events
         Highcharts.addEvent(this.playPauseBtn, 'keydown', handleKeyEvents);
@@ -136,7 +136,7 @@
 
     // Toggles between Play and Pause states, and makes calls to changeButtonType()
     // From http://www.creativebloq.com/html5/build-custom-html5-video-player-9134473
-    Timeline.prototype.togglePlayPause = function () {
+    Motion.prototype.togglePlayPause = function () {
         if (this.paused) {
             this.play();
         } else {
@@ -144,41 +144,41 @@
         }
     };
 
-    // Plays the timeline, continuously updating the chart
-    Timeline.prototype.play = function () {
-        var timeline = this;
+    // Plays the motion, continuously updating the chart
+    Motion.prototype.play = function () {
+        var motion = this;
         if (this.paused && parseFloat(this.playRange.value) === parseFloat(this.playRange.max)) {
             this.reset();
         }
         this.changeButtonType('pause');
         this.paused = false;
         this.timer = setInterval(function () {
-            timeline.playUpdate();
+            motion.playUpdate();
         }, this.updateInterval);
     };
 
-    // Pauses the timeline, which stops updating the chart
-    Timeline.prototype.pause = function () {
+    // Pauses the motion, which stops updating the chart
+    Motion.prototype.pause = function () {
         this.changeButtonType('play');
         this.paused = true;
         window.clearInterval(this.timer);
         this.attractToStep();
     };
 
-    // Resets the timeline and updates the chart. Does not pause
-    Timeline.prototype.reset = function () {
+    // Resets the motion and updates the chart. Does not pause
+    Motion.prototype.reset = function () {
         this.playRange.value = this.playRange.min;
         this.updateChart(this.playRange.value);
     };
 
     // Updates a button's title, innerHTML and CSS class to a certain value
-    Timeline.prototype.changeButtonType = function (value) {
+    Motion.prototype.changeButtonType = function (value) {
         this.playPauseBtn.title = value;
         this.playPauseBtn.className = value + " fa fa-" + value;
     };
 
     // Called continuously while playing
-    Timeline.prototype.playUpdate = function () {
+    Motion.prototype.playUpdate = function () {
         if (!this.paused) {
             this.inputValue = parseFloat(this.playRange.value);
             this.playRange.value = this.inputValue + this.step;
@@ -195,7 +195,7 @@
     };
 
     // Updates chart data and redraws the chart
-    Timeline.prototype.updateChart = function (inputValue) {
+    Motion.prototype.updateChart = function (inputValue) {
         var seriesKey,
             series,
             point,
@@ -222,21 +222,21 @@
     };
 
     // Moves output value to data point
-    Timeline.prototype.attractToStep = function () {
+    Motion.prototype.attractToStep = function () {
         this.playOutput.innerHTML = this.labels[this.round(this.playRange.value)];
     };
 
     // Returns an integer rounded up, down or even depending on
-    // timeline.magnet.round settings.
-    Timeline.prototype.round = function (number) {
+    // motion.magnet.round settings.
+    Motion.prototype.round = function (number) {
         return Math[this.roundType](number);
     };
 
-    // Initiates timeline automatically if timeline settings object exists and
+    // Initiates motion automatically if motion settings object exists and
     // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.timeline !== undefined && chart.options.timeline.enabled !== false) {
-            chart.timeline = new Timeline(chart);
+        if (chart.options.motion !== undefined && chart.options.motion.enabled !== false) {
+            chart.motion = new Motion(chart);
         }
     });
 }(Highcharts));

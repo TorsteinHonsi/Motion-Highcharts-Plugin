@@ -3,7 +3,7 @@ $(function () {
         // Initiate the chart
         $('#container').highcharts('Map', {
             title: {
-                text: 'Highmaps timeline'
+                text: 'Highmaps motion'
             },
 
             xAxis: {
@@ -25,7 +25,7 @@ $(function () {
                 }
             },
 
-            timeline: {
+            motion: {
                 enabled: true,
                 axisLabel: 'year',
                 labels: [

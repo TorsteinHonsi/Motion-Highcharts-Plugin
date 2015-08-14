@@ -1,27 +1,36 @@
 {
-	"name": "Timeline",
-	"version": "1.0.2",
-	"title": "Playable HTML5 timeline",
-	"author": {
-		"name": "Lars Cabrera",
-		"url": "https://github.com/larsac07/Timeline-Highcharts-Plugin"
-	},
-	"description": "NB! Moved to Motion plugin",
-	"keywords": ["timeline", "html5", "play", "live", "moving", "slider"],
-	"licenses": [
-		{
-			"type": "Creative Commons Attribution-ShareAlike 4.0 International License",
-			"url": "http://creativecommons.org/licenses/by-sa/4.0/"
-		}
-	],
-	"maintainers": [
-		{
-			"name": "Lars Cabrera",
-			"email": "larsac07@gmail.com"
-		}
-	],
-	"dependencies": {
-		"highcharts": "4.1"
-	},
-	"type": "plugin"
+    "title": "Motion",
+    "name": "Motion - Playable charts",
+    "version": "1.0.3",
+    "author": {
+        "name": "Lars Cabrera",
+        "url": "https://github.com/larsac07/Motion-Highcharts-Plugin"
+    },
+    "description": "Adds a playable HTML5 timeline to the chart.",
+    "keywords": ["motion", "moving",, "move", "timeline", "html5", "player", "play", "live", "slider"],
+    "licenses": [
+        {
+            "type": "Creative Commons Attribution-ShareAlike 4.0 International License",
+            "url": "http://creativecommons.org/licenses/by-sa/4.0/"
+        }
+    ],
+    "demo": [
+        "http://jsfiddle.net/larsac07/pbezw72b/",
+        "http://jsfiddle.net/larsac07/hs2ujwok/",
+        "http://jsfiddle.net/larsac07/z73qjhx9/",
+        "http://jsfiddle.net/larsac07/dsL25w83/",
+        "http://jsfiddle.net/larsac07/91waaLrc/",
+        "http://jsfiddle.net/larsac07/24za42bn/",
+        "http://jsfiddle.net/larsac07/mrdz27zy/"
+    ],
+    "maintainers": [
+        {
+            "name": "Lars Cabrera",
+            "email": "larsac07@gmail.com"
+        }
+    ],
+    "dependencies": {
+        "highcharts": "4.1"
+    },
+    "type": "plugin"
 }

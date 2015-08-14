@@ -12,7 +12,7 @@ $(function () {
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
-        timeline: {
+        motion: {
             enabled: true,
             axisLabel: 'year',
             labels: [2005, 2006, 2007, 2008, 2009],

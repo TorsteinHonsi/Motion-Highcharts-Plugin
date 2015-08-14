@@ -46,7 +46,7 @@ $(function () {
     // Initiate the chart
     $('#container').highcharts('Map', {
         title: {
-            text: 'Highmaps timeline'
+            text: 'Highmaps motion'
         },
 
         subtitle: {
@@ -65,7 +65,7 @@ $(function () {
             max: 1100
         },
 
-        timeline: {
+        motion: {
             enabled: true,
             axisLabel: 'year',
             labels: [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010],
