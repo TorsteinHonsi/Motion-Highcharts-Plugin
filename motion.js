@@ -8,51 +8,35 @@
 /*global Highcharts, window*/
 
 (function (H) {
+    // Check if object is array
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
+
     // Sets up motion ready to use
     function Motion(chart) {
-        var motion = this,
-            settings;
+        var motion = this;
 
         this.chart = chart;
-        this.motionSettings = settings = this.chart.options.motion;
+        this.paused = true;
+        this.options = H.merge(this.defaultOptions, this.chart.options.motion);
         this.dataSeries = [];
-        if (settings.series.constructor === Array) { // Multiple series with data
+        this.dataLength = 0;
+        if (isArray(this.options.series)) { // Multiple series with data
             Highcharts.each(this.chart.series, function (series, index) {
-                if (settings.series.indexOf(index) >= 0) {
+                var i;
+                if (motion.options.series.indexOf(index) >= 0) {
                     motion.dataSeries[index] = series;
+                    for (i = 0; i < series.data.length; i++) {
+                        motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
+                    }
                 }
             });
         } else { // Only one series with data
-            this.dataSeries[settings.series] = this.chart.series[settings.series];
+            this.dataSeries[this.options.series] = this.chart.series[this.options.series.series];
         }
-        this.labels = settings.labels;
-        this.loop = settings.loop === true;
-        this.paused = true;
-        this.updateInterval = 10;
-        if (settings.updateInterval !== undefined) {
-            this.updateInterval = settings.updateInterval;
-        }
-        this.axisLabel = 'year';
-        if (settings.axisLabel !== undefined) {
-            this.axisLabel = settings.axisLabel;
-        }
-
-        // Magnet settings
-        this.magnetType = 'both';
-        this.roundType = 'round';
-        this.step = 0.01;
-        this.autoPlay = settings.autoPlay === true;
-        if (settings.magnet !== undefined) {
-            if (settings.magnet.type !== undefined) {
-                this.magnetType = settings.magnet.type;
-            }
-            if (settings.magnet.round !== undefined) {
-                this.roundType = settings.magnet.round;
-            }
-            if (settings.magnet.step !== undefined) {
-                this.step = settings.magnet.step;
-            }
-        }
+        console.log(this.dataLength);
 
         // Play-controls HTML-div
         this.playControls = H.createElement('div', {
@@ -70,30 +54,24 @@
         this.playRange = H.createElement('input', {
             id: 'play-range',
             type: 'range',
-            value: this.labels.length - 1,
+            value: this.dataLength - 1,
             min: 0,
-            max: this.labels.length - 1,
-            step: this.step
+            max: this.dataLength - 1,
+            step: this.options.magnet.step
         }, null, this.playControls, null);
 
         // Play-range HTML-output
         this.playOutput = H.createElement('label', {
             id: 'play-output',
-            name: this.motionSettings.axisLabel
+            name: this.options.axisLabel
         }, null, this.playControls, null);
-        this.playOutput.innerHTML = this.labels[this.labels.length - 1];
+        if (isArray(this.options.labels)) {
+            this.playOutput.innerHTML = this.options.labels[this.dataLength - 1];
+        } else {
+            this.playOutput.innerHTML = this.dataLength - 1;
+        }
 
-        // Bind controls to events
-        Highcharts.addEvent(this.playPauseBtn, 'click', function () {
-            motion.togglePlayPause();
-        });
-        Highcharts.addEvent(this.playRange, 'mouseup', function () {
-            motion.attractToStep();
-        });
-        Highcharts.addEvent(this.playRange, 'input', function () {
-            motion.updateChart(this.value);
-        });
-
+        // Common key event handler function
         function handleKeyEvents(e) {
             e = e || window.event;
             switch (e.which) {
@@ -113,6 +91,17 @@
             }
             e.preventDefault();
         }
+
+        // Bind controls to events
+        Highcharts.addEvent(this.playPauseBtn, 'click', function () {
+            motion.togglePlayPause();
+        });
+        Highcharts.addEvent(this.playRange, 'mouseup', function () {
+            motion.attractToStep();
+        });
+        Highcharts.addEvent(this.playRange, 'input', function () {
+            motion.updateChart(this.value);
+        });
 
         // Request focus to the controls when clicking on controls div
         Highcharts.addEvent(this.playControls, 'click', function () {
@@ -134,14 +123,24 @@
         }
     }
 
+    // Default options for Motion
+    Motion.prototype.defaultOptions = {
+        enabled: true,
+        axisLabel: 'year',
+        autoPlay : false,
+        loop: false,
+        series: 0,
+        updateInterval: 10,
+        magnet: {
+            round: 'round',
+            step: 0.01
+        }
+    };
+
     // Toggles between Play and Pause states, and makes calls to changeButtonType()
     // From http://www.creativebloq.com/html5/build-custom-html5-video-player-9134473
     Motion.prototype.togglePlayPause = function () {
-        if (this.paused) {
-            this.play();
-        } else {
-            this.pause();
-        }
+        this[this.paused ? 'play' : 'pause']();
     };
 
     // Plays the motion, continuously updating the chart
@@ -181,11 +180,11 @@
     Motion.prototype.playUpdate = function () {
         if (!this.paused) {
             this.inputValue = parseFloat(this.playRange.value);
-            this.playRange.value = this.inputValue + this.step;
+            this.playRange.value = this.inputValue + this.options.magnet.step;
             this.attractToStep();
             this.updateChart(this.playRange.value); // Use playRange.value to get updated value
             if (this.playRange.value >= parseFloat(this.playRange.max)) { // Auto-pause
-                if (this.loop) {
+                if (this.options.loop) {
                     this.reset();
                 } else {
                     this.pause();
@@ -223,20 +222,26 @@
 
     // Moves output value to data point
     Motion.prototype.attractToStep = function () {
-        this.playOutput.innerHTML = this.labels[this.round(this.playRange.value)];
+        if (isArray(this.options.labels)) {
+            this.playOutput.innerHTML = this.options.labels[this.round(this.playRange.value)];
+        } else {
+            this.playOutput.innerHTML = this.round(this.playRange.value);
+        }
     };
 
     // Returns an integer rounded up, down or even depending on
-    // motion.magnet.round settings.
+    // motion.magnet.round options.
     Motion.prototype.round = function (number) {
-        return Math[this.roundType](number);
+        return Math[this.options.magnet.round](number);
     };
 
-    // Initiates motion automatically if motion settings object exists and
+    // Initiates motion automatically if motion options object exists and
     // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.motion !== undefined && chart.options.motion.enabled !== false) {
+        if (chart.options.motion === undefined || chart.options.motion.enabled !== false) {
             chart.motion = new Motion(chart);
         }
     });
+
+    H.Motion = Motion;
 }(Highcharts));
