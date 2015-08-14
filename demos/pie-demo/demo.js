@@ -42,24 +42,24 @@ $(function () {
             colorByPoint: true,
             data: [{
                 name: "Microsoft Internet Explorer",
-                data: [56.33, 57.23, 35.14, 25.65, 19.37]
+                sequence: [56.33, 57.23, 35.14, 25.65, 19.37]
             }, {
                 name: "Chrome",
-                data: [24.03, 28.05, 46.68, 52.49, 56.51],
+                sequence: [24.03, 28.05, 46.68, 52.49, 56.51],
                 sliced: true,
                 selected: true
             }, {
                 name: "Firefox",
-                data: [10.38, 9.53, 12.43, 15.63, 16.32]
+                sequence: [10.38, 9.53, 12.43, 15.63, 16.32]
             }, {
                 name: "Safari",
-                data: [4.77, 4.51, 5.32, 5.56, 6.76]
+                sequence: [4.77, 4.51, 5.32, 5.56, 6.76]
             }, {
                 name: "Opera",
-                data: [0.91, 0.53, 0.32, 0.23, 0.14]
+                sequence: [0.91, 0.53, 0.32, 0.23, 0.14]
             }, {
                 name: "Proprietary or Undetectable",
-                data: [0.2, 0.15, 0.11, 0.9, 0.9]
+                sequence: [0.2, 0.15, 0.11, 0.9, 0.9]
             }]
         }]
     });

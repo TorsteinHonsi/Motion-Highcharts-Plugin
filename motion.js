@@ -208,9 +208,9 @@
                     for (i = 0; i < series.data.length; i++) {
                         point = series.data[i];
                         try {
-                            point.update(point.data[this.inputValue], false, false);
+                            point.update(point.sequence[this.inputValue], false, false);
                         } catch (e) {
-                            console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.data[this.inputValue]);
+                            console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.sequence[this.inputValue]);
                         }
                     }
                 }
