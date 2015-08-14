@@ -23,9 +23,9 @@
         this.options = H.merge(this.defaultOptions, this.chart.options.motion);
         this.dataSeries = [];
         this.dataLength = 0;
+        motion.options.series = H.splat(motion.options.series);
         Highcharts.each(this.chart.series, function (series, index) {
-            if ((isArray(motion.options.series) && motion.options.series.indexOf(index) >= 0)
-                || index === motion.options.series) {
+            if (motion.options.series.indexOf(index) >= 0) {
                 motion.dataSeries[index] = series;
                 for (i = 0; i < series.data.length; i++) {
                     motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
