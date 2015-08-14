@@ -1,2 +1,2 @@
 # Timeline Highcharts Plugin
-Moved to Motion Highcharts Plugin
+Moved/renamed to Motion Highcharts Plugin.
