@@ -9,7 +9,6 @@ The Motion Highcharts Plugin adds an interactive HTML5 player to any Highcharts 
 * [Area spline](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
 * [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-colors-demo/)
 * [Map (AU) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-bubbles-demo/)
-* [Map (World) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-world-bubbles-demo/)
 
 ## Usage
 Go see the [Usage Wiki page](https://github.com/larsac07/Motion-Highcharts-Plugin/wiki)

@@ -1,7 +1,7 @@
 /**
  * @license http://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
  * @author  Lars Cabrera
- * @version 1.0.5
+ * @version 1.0.6
  */
 
 // JSLint options:
@@ -23,19 +23,15 @@
         this.options = H.merge(this.defaultOptions, this.chart.options.motion);
         this.dataSeries = [];
         this.dataLength = 0;
-        if (isArray(this.options.series)) { // Multiple series with data
-            Highcharts.each(this.chart.series, function (series, index) {
-                var i;
-                if (motion.options.series.indexOf(index) >= 0) {
-                    motion.dataSeries[index] = series;
-                    for (i = 0; i < series.data.length; i++) {
-                        motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
-                    }
+        Highcharts.each(this.chart.series, function (series, index) {
+            if ((isArray(motion.options.series) && motion.options.series.indexOf(index) >= 0)
+                || index === motion.options.series) {
+                motion.dataSeries[index] = series;
+                for (i = 0; i < series.data.length; i++) {
+                    motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
                 }
-            });
-        } else { // Only one series with data
-            this.dataSeries[this.options.series] = this.chart.series[this.options.series.series];
-        }
+            }
+        });
 
         // Play-controls HTML-div
         this.playControls = H.createElement('div', {

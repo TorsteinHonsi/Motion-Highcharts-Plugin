@@ -1,7 +1,7 @@
 {
     "title": "Motion",
     "name": "Motion",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "author": {
         "name": "Lars Cabrera",
         "url": "https://github.com/larsac07/Motion-Highcharts-Plugin"
@@ -20,8 +20,7 @@
         "http://jsfiddle.net/larsac07/z73qjhx9/",
         "http://jsfiddle.net/larsac07/dsL25w83/",
         "http://jsfiddle.net/larsac07/91waaLrc/",
-        "http://jsfiddle.net/larsac07/24za42bn/",
-        "http://jsfiddle.net/larsac07/mrdz27zy/"
+        "http://jsfiddle.net/larsac07/24za42bn/"
     ],
     "maintainers": [
         {
