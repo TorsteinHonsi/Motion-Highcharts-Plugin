@@ -1,12 +1,12 @@
 {
     "title": "Motion",
-    "name": "Motion - Playable charts",
+    "name": "Motion",
     "version": "1.0.4",
     "author": {
         "name": "Lars Cabrera",
         "url": "https://github.com/larsac07/Motion-Highcharts-Plugin"
     },
-    "description": "Adds a playable HTML5 timeline to the chart.",
+    "description": "Adds an interactive HTML5 player to the chart.",
     "keywords": ["motion", "moving", "move", "timeline", "html5", "player", "play", "live", "slider"],
     "licenses": [
         {
