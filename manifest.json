@@ -7,7 +7,7 @@
         "url": "https://github.com/larsac07/Motion-Highcharts-Plugin"
     },
     "description": "Adds a playable HTML5 timeline to the chart.",
-    "keywords": ["motion", "moving",, "move", "timeline", "html5", "player", "play", "live", "slider"],
+    "keywords": ["motion", "moving", "move", "timeline", "html5", "player", "play", "live", "slider"],
     "licenses": [
         {
             "type": "Creative Commons Attribution-ShareAlike 4.0 International License",
