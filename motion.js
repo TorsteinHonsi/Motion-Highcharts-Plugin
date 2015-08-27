@@ -28,7 +28,8 @@
             if (motion.options.series.indexOf(index) >= 0) {
                 motion.dataSeries[index] = series;
                 for (i = 0; i < series.data.length; i++) {
-                    motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
+                    if (series.data[i].sequence)
+                        motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
                 }
             }
         });
@@ -203,7 +204,8 @@
                     for (i = 0; i < series.data.length; i++) {
                         point = series.data[i];
                         try {
-                            point.update(point.sequence[this.inputValue], false, false);
+                            if (series.data[i].sequence)
+                                point.update(point.sequence[this.inputValue], false, false);
                         } catch (e) {
                             console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.sequence[this.inputValue]);
                         }
