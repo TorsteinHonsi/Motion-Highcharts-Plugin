@@ -235,7 +235,7 @@
     // Initiates motion automatically if motion options object exists and
     // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.motion === undefined || chart.options.motion.enabled !== false) {
+        if (chart.options.motion && chart.options.motion.enabled !== false) {
             chart.motion = new Motion(chart);
         }
     });
