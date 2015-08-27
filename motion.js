@@ -61,7 +61,7 @@
             name: this.options.axisLabel
         }, null, this.playControls, null);
         if (isArray(this.options.labels)) {
-            this.playOutput.innerHTML = this.options.labels[this.dataLength - 1];
+            this.playOutput.innerHTML = this.options.labels[this.dataLength - 1] || '';
         } else {
             this.playOutput.innerHTML = this.dataLength - 1;
         }
@@ -218,7 +218,7 @@
     // Moves output value to data point
     Motion.prototype.attractToStep = function () {
         if (isArray(this.options.labels)) {
-            this.playOutput.innerHTML = this.options.labels[this.round(this.playRange.value)];
+            this.playOutput.innerHTML = this.options.labels[this.round(this.playRange.value)] || '';
         } else {
             this.playOutput.innerHTML = this.round(this.playRange.value);
         }
