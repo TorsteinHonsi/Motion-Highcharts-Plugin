@@ -28,8 +28,9 @@
             if (motion.options.series.indexOf(index) >= 0) {
                 motion.dataSeries[index] = series;
                 for (i = 0; i < series.data.length; i++) {
-                    if (series.data[i].sequence)
+                    if (series.data[i].sequence) {
                         motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
+                    }
                 }
             }
         });
@@ -194,20 +195,21 @@
         var seriesKey,
             series,
             point,
+            roundedInput = this.round(inputValue),
             i;
-        this.inputValue = this.round(inputValue);
-        if (this.currentAxisValue !== this.inputValue) {
-            this.currentAxisValue = this.inputValue;
+        if (this.currentAxisValue !== roundedInput) {
+            this.currentAxisValue = roundedInput;
             for (seriesKey in this.dataSeries) {
                 if (this.dataSeries.hasOwnProperty(seriesKey)) {
                     series = this.dataSeries[seriesKey];
                     for (i = 0; i < series.data.length; i++) {
                         point = series.data[i];
                         try {
-                            if (series.data[i].sequence)
-                                point.update(point.sequence[this.inputValue], false, false);
+                            if (point.sequence) {
+                                point.update(point.sequence[roundedInput], false, false);
+                            }
                         } catch (e) {
-                            console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.sequence[this.inputValue]);
+                            console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.sequence[roundedInput]);
                         }
                     }
                 }
@@ -235,7 +237,7 @@
     // Initiates motion automatically if motion options object exists and
     // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.motion && chart.options.motion.enabled !== false) {
+        if (chart.options.motion && chart.options.motion.enabled) {
             chart.motion = new Motion(chart);
         }
     });
