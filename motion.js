@@ -28,7 +28,8 @@
             if (motion.options.series.indexOf(index) >= 0) {
                 motion.dataSeries[index] = series;
                 for (i = 0; i < series.data.length; i++) {
-                    motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
+                    if (series.data[i].sequence)
+                        motion.dataLength = Math.max(motion.dataLength, series.data[i].sequence.length);
                 }
             }
         });
@@ -61,7 +62,7 @@
             name: this.options.axisLabel
         }, null, this.playControls, null);
         if (isArray(this.options.labels)) {
-            this.playOutput.innerHTML = this.options.labels[this.dataLength - 1];
+            this.playOutput.innerHTML = this.options.labels[this.dataLength - 1] || '';
         } else {
             this.playOutput.innerHTML = this.dataLength - 1;
         }
@@ -203,7 +204,8 @@
                     for (i = 0; i < series.data.length; i++) {
                         point = series.data[i];
                         try {
-                            point.update(point.sequence[this.inputValue], false, false);
+                            if (series.data[i].sequence)
+                                point.update(point.sequence[this.inputValue], false, false);
                         } catch (e) {
                             console.error('Error:', e, ' \nat point:', point, ' \nwith new value:', point.sequence[this.inputValue]);
                         }
@@ -218,7 +220,7 @@
     // Moves output value to data point
     Motion.prototype.attractToStep = function () {
         if (isArray(this.options.labels)) {
-            this.playOutput.innerHTML = this.options.labels[this.round(this.playRange.value)];
+            this.playOutput.innerHTML = this.options.labels[this.round(this.playRange.value)] || '';
         } else {
             this.playOutput.innerHTML = this.round(this.playRange.value);
         }
@@ -233,7 +235,7 @@
     // Initiates motion automatically if motion options object exists and
     // is not disabled
     H.Chart.prototype.callbacks.push(function (chart) {
-        if (chart.options.motion === undefined || chart.options.motion.enabled !== false) {
+        if (chart.options.motion && chart.options.motion.enabled !== false) {
             chart.motion = new Motion(chart);
         }
     });
