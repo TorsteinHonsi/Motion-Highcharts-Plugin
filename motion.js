@@ -45,7 +45,7 @@
             id: 'play-pause-button',
             title: 'play'
         }, null, this.playControls, null);
-        this.playPauseBtn.className = "fa fa-play";
+        this.playPauseBtn.className = this.options.buttonPrefix + "play";
 
         // Play-range HTML-input
         this.playRange = H.createElement('input', {
@@ -131,7 +131,8 @@
         magnet: {
             round: 'round',
             step: 0.01
-        }
+        },
+        buttonPrefix: "fa fa-"
     };
 
     // Toggles between Play and Pause states, and makes calls to changeButtonType()
@@ -170,7 +171,7 @@
     // Updates a button's title, innerHTML and CSS class to a certain value
     Motion.prototype.changeButtonType = function (value) {
         this.playPauseBtn.title = value;
-        this.playPauseBtn.className = value + " fa fa-" + value;
+        this.playPauseBtn.className = value + " " + this.options.buttonPrefix + value;
     };
 
     // Called continuously while playing
