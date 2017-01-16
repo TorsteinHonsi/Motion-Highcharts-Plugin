@@ -206,6 +206,7 @@
             i;
         if (this.currentAxisValue !== roundedInput) {
             this.currentAxisValue = roundedInput;
+            this.chart.options.motion.startIndex = roundedInput;
             for (seriesKey in this.dataSeries) {
                 if (this.dataSeries.hasOwnProperty(seriesKey)) {
                     series = this.dataSeries[seriesKey];
