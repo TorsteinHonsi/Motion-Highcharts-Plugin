@@ -3,12 +3,12 @@ The Motion Highcharts Plugin adds an interactive HTML5 player to any Highcharts 
 ![Screenshot of bar chart with Motion](screenshots/motion_bars_screenshot.png)
 
 ## Demos
-* [Map (AU) - bubbles](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-bubbles-demo/)
-* [Map (AU) - colors](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-colors-demo/)
-* [Area spline](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
-* [3D Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/3dbars-demo/)
-* [Bars](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/bars-demo/)
-* [Pie](http://jsfiddle.net/gh/get/jquery/1.9.1/larsac07/Motion-Highcharts-Plugin/tree/master/demos/pie-demo/)
+* [Map (AU) - bubbles](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-bubbles-demo/)
+* [Map (AU) - colors](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/map-australia-colors-demo/)
+* [Area spline](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/areaspline-demo/)
+* [3D Bars](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/3dbars-demo/)
+* [Bars](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/bars-demo/)
+* [Pie](http://jsfiddle.net/gh/get/library/pure/larsac07/Motion-Highcharts-Plugin/tree/master/demos/pie-demo/)
 
 ## Usage
 Go see the [Usage Wiki page](https://github.com/larsac07/Motion-Highcharts-Plugin/wiki)

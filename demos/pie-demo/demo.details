@@ -1,0 +1,6 @@
+---
+ name: Highcharts Motion Pie
+ js_wrap: b
+ authors:
+   - Lars Cabrera
+...
