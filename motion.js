@@ -51,7 +51,7 @@
         this.playRange = H.createElement('input', {
             id: 'play-range',
             type: 'range',
-            value: H.pick(this.options.startValue, this.dataLength - 1),
+            value: H.pick(this.options.startIndex, this.dataLength - 1),
             min: 0,
             max: this.dataLength - 1,
             step: this.options.magnet.step
