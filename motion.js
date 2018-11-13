@@ -117,7 +117,7 @@
         this.updateChart(this.inputValue);
 
         // Auto-play
-        if (this.autoPlay) {
+        if (this.options.autoPlay) {
             this.play();
         }
     }
