@@ -43,7 +43,8 @@
         // Play/pause HTML-button
         this.playPauseBtn = H.createElement('button', {
             id: 'play-pause-button',
-            title: 'play'
+            title: 'play',
+            type: 'button'
         }, null, this.playControls, null);
         this.playPauseBtn.className = this.options.playIcon;
 
